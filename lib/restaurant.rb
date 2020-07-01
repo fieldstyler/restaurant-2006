@@ -1,37 +1,32 @@
 class Restaurant
-  attr_reader :name, :opening_time, :dishes
 
+  attr_reader :opening_time, :name, :dishes
   def initialize(opening_time, name)
     @opening_time = opening_time
     @name = name
     @dishes = []
+
   end
 
-  def add_dish(dish)
-    @dishes << dish
+  def closing_time(hour)
+    (@closing_time = opening_time.to_i + hour).to_s + ':00'
   end
 
-  def closing_time(hours)
-    (@opening_time.to_i + hours).to_s + ':00'
+  def add_dish(food)
+    @dishes << food
   end
 
   def open_for_lunch?
-    @opening_time.to_i <= 11
-  end
+    if opening_time.to_i < 12
+      true
+    else
+      false
+    end
+  end 
 
   def menu_dish_names
-    names_upcased = []
-    @dishes.each do |dish|
-      names_upcased << dish.upcase
-    end
-    names_upcased
+    @dishes = @dishes.map!(&:upcase) #found '.map!(&:upcase)' online, don't understand
   end
 
-  def announce_closing_time(hours)
-    time = closing_time(hours) + "AM"
-    if closing_time(hours).to_i >= 12
-      time = (closing_time(hours).to_i - 12).to_s + ':00PM'
-    end
-    "#{@name} will be closing at #{time}"
-  end
+
 end
